@@ -1,0 +1,28 @@
+name: Crypto Signal Bot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install libs
+        run: pip install requests pandas numpy
+      - name: Run Bot
+        run: python crypto_bot.py
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update Crypto"
+          file_pattern: 'docs/data/*.json'
