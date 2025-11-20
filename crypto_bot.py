@@ -9,6 +9,7 @@ import numpy as np
 DATA_DIR = "docs/data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
+# コインチェック取扱銘柄
 COINS = {
     "BTC": "bitcoin", "ETH": "ethereum", "XRP": "ripple",
     "XEM": "nem", "LTC": "litecoin", "BCH": "bitcoin-cash",
@@ -30,15 +31,22 @@ class CryptoHedgeFundAnalyzer:
         self.btc_trend = "NEUTRAL"
 
     def fetch_ohlc(self, coin_id, days):
+        # タイムアウトを30秒に延長し、リトライ処理を追加
         url = f"https://api.coingecko.com/api/v3/coins/{coin_id}/ohlc?vs_currency=jpy&days={days}"
-        try:
-            resp = requests.get(url, timeout=30)
-            resp.raise_for_status()
-            data = resp.json()
-            df = pd.DataFrame(data, columns=["time", "open", "high", "low", "close"])
-            return df
-        except Exception:
-            return None
+        for _ in range(3): # 3回リトライ
+            try:
+                resp = requests.get(url, timeout=30)
+                if resp.status_code == 429: # アクセス制限なら待つ
+                    time.sleep(10)
+                    continue
+                resp.raise_for_status()
+                data = resp.json()
+                if not data: return None
+                df = pd.DataFrame(data, columns=["time", "open", "high", "low", "close"])
+                return df
+            except Exception:
+                time.sleep(2)
+        return None
 
     def fetch_fear_and_greed(self):
         try:
@@ -48,26 +56,31 @@ class CryptoHedgeFundAnalyzer:
         except: return 50
 
     def calc_indicators(self, df):
+        # RSI
         delta = df["close"].diff()
         gain = (delta.where(delta > 0, 0)).rolling(14).mean()
         loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
         rs = gain / loss
         rsi = 100 - (100 / (1 + rs))
 
+        # Bollinger Bands
         sma20 = df["close"].rolling(20).mean()
         std20 = df["close"].rolling(20).std()
         bb_up = sma20 + (std20 * 2)
         bb_low = sma20 - (std20 * 2)
 
+        # MACD
         ema12 = df["close"].ewm(span=12).mean()
         ema26 = df["close"].ewm(span=26).mean()
         macd = ema12 - ema26
         sig = macd.ewm(span=9).mean()
 
+        # MA Trend
         ma7 = df["close"].rolling(7).mean()
         ma25 = df["close"].rolling(25).mean()
         ma99 = df["close"].rolling(99).mean()
 
+        # ATR
         prev_close = df["close"].shift(1)
         tr1 = df["high"] - df["low"]
         tr2 = (df["high"] - prev_close).abs()
@@ -78,8 +91,9 @@ class CryptoHedgeFundAnalyzer:
         return rsi, bb_up, bb_low, macd, sig, ma7, ma25, ma99, atr
 
     def analyze_logic(self, df, timeframe_name):
+        # 【修正箇所】データ不足時にも 'price': 0 を返すように修正
         if df is None or len(df) < 100:
-            return {"score":0, "signal":"---", "color":"#ccc", "msg":"データ不足", "tp":0, "sl":0}
+            return {"score":0, "signal":"---", "color":"#ccc", "msg":"データ不足", "tp":0, "sl":0, "price": 0}
 
         price = df["close"].iloc[-1]
         rsi, bb_u, bb_l, macd, sig, ma7, ma25, ma99, atr = self.calc_indicators(df)
@@ -136,11 +150,11 @@ class CryptoHedgeFundAnalyzer:
             print(f"Analyzing {symbol}...")
             df_s = self.fetch_ohlc(coin_id, 1)
             res_s = self.analyze_logic(df_s, "short")
-            time.sleep(3)
+            time.sleep(5) # 制限回避のため5秒に延長
             
             df_l = self.fetch_ohlc(coin_id, 90)
             res_l = self.analyze_logic(df_l, "long")
-            time.sleep(3)
+            time.sleep(5) # 制限回避のため5秒に延長
 
             self.results[symbol] = {"symbol": symbol, "price": res_s["price"], "short": res_s, "long": res_l}
 
