@@ -1,0 +1,626 @@
+{
+  "updated": "2025/11/20 21:35",
+  "market": {
+    "btc_trend": "DOWN",
+    "fng_score": 11,
+    "fng_state": "極度の恐怖"
+  },
+  "data": {
+    "BTC": {
+      "symbol": "BTC",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "ETH": {
+      "symbol": "ETH",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "XRP": {
+      "symbol": "XRP",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "XEM": {
+      "symbol": "XEM",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "LTC": {
+      "symbol": "LTC",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "BCH": {
+      "symbol": "BCH",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "MONA": {
+      "symbol": "MONA",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "XLM": {
+      "symbol": "XLM",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "QTUM": {
+      "symbol": "QTUM",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "BAT": {
+      "symbol": "BAT",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "IOST": {
+      "symbol": "IOST",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "ENJ": {
+      "symbol": "ENJ",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "SAND": {
+      "symbol": "SAND",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "DOT": {
+      "symbol": "DOT",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "CHZ": {
+      "symbol": "CHZ",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "LINK": {
+      "symbol": "LINK",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "MATIC": {
+      "symbol": "MATIC",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "ASTR": {
+      "symbol": "ASTR",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "APE": {
+      "symbol": "APE",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "AXS": {
+      "symbol": "AXS",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "SHIB": {
+      "symbol": "SHIB",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "AVAX": {
+      "symbol": "AVAX",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "JASMY": {
+      "symbol": "JASMY",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "OMG": {
+      "symbol": "OMG",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "PLT": {
+      "symbol": "PLT",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "FNCT": {
+      "symbol": "FNCT",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "DAI": {
+      "symbol": "DAI",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    },
+    "MKR": {
+      "symbol": "MKR",
+      "price": 0,
+      "short": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      },
+      "long": {
+        "score": 0,
+        "signal": "---",
+        "color": "#ccc",
+        "msg": "データ不足",
+        "tp": 0,
+        "sl": 0,
+        "price": 0
+      }
+    }
+  }
+}
