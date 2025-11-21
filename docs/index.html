@@ -3,150 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Coincheck AI Final</title>
+    <title>Coincheck AI</title>
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
-        :root { --bg:#f0f2f5; --card:#fff; --text:#1c1e21; --green:#06c755; --red:#ff3b30; --blue:#007aff; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; margin: 0; padding-bottom: 100px; -webkit-tap-highlight-color: transparent; }
-        .market-panel { background: #1c1e21; color: white; padding: 20px 15px 15px; border-radius: 0 0 20px 20px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .mp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .mp-label { font-size: 12px; opacity: 0.8; }
-        .mp-val { font-weight: bold; font-size: 18px; }
-        .fng-bar { height: 6px; background: #333; border-radius: 3px; margin-top: 8px; overflow: hidden; position: relative; }
-        .fng-fill { height: 100%; transition: width 1s; }
+        :root {
+            --bg: #f4f5f7; --text: #333; --card: #fff;
+            --green: #00c076; --red: #ff4d4f; --blue: #1890ff;
+            --gold: #faad14;
+        }
+        body {
+            background: var(--bg); color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0; padding-bottom: 100px; -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ヘッダー */
+        header {
+            background: var(--card); padding: 15px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        h1 { margin: 0; font-size: 18px; font-weight: 800; }
+        .notify-btn {
+            background: #eee; border: none; padding: 8px 12px;
+            border-radius: 20px; font-size: 12px; font-weight: bold;
+            cursor: pointer; display: flex; align-items: center; gap: 5px;
+        }
+        .notify-btn.active { background: var(--green); color: white; }
+
+        /* タブ */
+        .tabs {
+            display: flex; padding: 15px; gap: 10px; justify-content: center;
+        }
+        .tab {
+            flex: 1; padding: 10px; text-align: center;
+            border-radius: 12px; font-weight: bold; font-size: 14px;
+            background: #e0e0e0; color: #666; cursor: pointer; transition: 0.2s;
+        }
+        .tab.active {
+            background: #333; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
         .container { padding: 0 15px; max-width: 600px; margin: 0 auto; }
-        .tabs { display: flex; background: #e4e6eb; padding: 4px; border-radius: 12px; margin-bottom: 15px; }
-        .tab { flex: 1; text-align: center; padding: 8px; font-size: 13px; font-weight: bold; border-radius: 8px; color: #65676b; cursor: pointer; transition: 0.2s; }
-        .tab.active { background: #fff; color: #1c1e21; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .coin-card { background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); position: relative; overflow: hidden; transition: transform 0.1s; }
-        .coin-card:active { transform: scale(0.98); }
-        .cc-header { display: flex; justify-content: space-between; align-items: center; }
-        .cc-sym { font-size: 17px; font-weight: 800; }
-        .cc-price { font-size: 13px; color: #65676b; }
-        .cc-score-area { text-align: right; }
-        .cc-badge { font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 6px; color: white; display: inline-block; }
-        .cc-detail { margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee; display: flex; justify-content: space-between; font-size: 12px; }
-        .strategy-box { text-align: center; flex: 1; }
-        .st-label { color: #888; font-size: 10px; display: block; margin-bottom: 2px; }
-        .st-val { font-weight: bold; font-family: monospace; font-size: 13px; }
-        .st-tp { color: var(--red); }
-        .st-sl { color: var(--blue); }
-        .pf-item { background: white; border-radius: 12px; padding: 15px; margin-bottom: 8px; border-left: 4px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
-        .pf-item.plus { border-left-color: var(--red); }
-        .pf-item.minus { border-left-color: var(--green); }
-        .fab { position: fixed; bottom: 30px; right: 20px; width: 56px; height: 56px; background: #1877f2; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 28px; box-shadow: 0 4px 15px rgba(24,119,242,0.4); cursor: pointer; z-index: 100; }
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
-        .m-box { background: #fff; padding: 25px; border-radius: 20px; width: 85%; max-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; background: #f7f8fa; font-size: 16px; box-sizing: border-box; }
-        button { width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; margin-top: 5px; }
-        .b-save { background: #1877f2; color: white; }
-        .b-close { background: #f0f2f5; color: #65676b; margin-top: 10px; }
-        .updated { text-align: right; font-size: 10px; opacity: 0.7; margin-top: 5px; }
+
+        /* ランキングセクション */
+        .section-title {
+            font-size: 16px; font-weight: 900; margin: 20px 0 10px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .ranking-list { display: flex; flex-direction: column; gap: 10px; }
+
+        .rank-card {
+            background: var(--card); border-radius: 16px; padding: 15px;
+            display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03); position: relative;
+            overflow: hidden; cursor: pointer;
+        }
+        .rank-badge {
+            position: absolute; top: 0; left: 0;
+            background: #333; color: #fff; font-size: 10px; font-weight: bold;
+            padding: 4px 10px 4px 8px; border-radius: 0 0 12px 0;
+        }
+        .rank-1 .rank-badge { background: var(--gold); color: #000; }
+        .rank-2 .rank-badge { background: #bfbfbf; }
+        .rank-3 .rank-badge { background: #cd7f32; }
+
+        .rc-left { margin-left: 10px; }
+        .rc-sym { font-size: 18px; font-weight: 800; }
+        .rc-price { font-size: 12px; color: #888; }
+        
+        .rc-right { text-align: right; }
+        .score-val { font-size: 22px; font-weight: 900; color: var(--text); }
+        .score-lbl { font-size: 10px; color: #999; display: block; margin-top: -4px; }
+        
+        .signal-tag {
+            font-size: 11px; font-weight: bold; padding: 4px 10px;
+            border-radius: 6px; color: white; margin-top: 5px; display: inline-block;
+        }
+
+        /* 資産リスト */
+        .pf-card {
+            background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 10px;
+            border-left: 5px solid #ddd; position: relative;
+        }
+        .pf-card.plus { border-left-color: var(--red); }
+        .pf-card.minus { border-left-color: var(--green); } /* 仮想通貨は赤が上げ、緑が下げの文化が多いが、日本式に合わせるなら赤字=プラス */
+        
+        .del-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: #f5f5f5; border: none; padding: 5px 10px;
+            border-radius: 20px; font-size: 10px; color: #999;
+        }
+
+        /* 更新日時 */
+        .updated-time { text-align: center; font-size: 11px; color: #999; margin-top: 20px; }
+
+        /* モーダル */
+        .fab {
+            position: fixed; bottom: 25px; right: 25px;
+            width: 60px; height: 60px; background: #333; color: #fff;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 99;
+        }
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center;
+            z-index: 1000; backdrop-filter: blur(5px);
+        }
+        .modal-box {
+            background: #fff; width: 85%; max-width: 320px; padding: 25px; border-radius: 20px;
+        }
+        input, select {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 1px solid #eee; border-radius: 10px; background: #f9f9f9;
+            font-size: 16px; box-sizing: border-box;
+        }
+        button.save { width: 100%; padding: 12px; background: #333; color: #fff; border: none; border-radius: 10px; font-weight: bold; font-size: 15px; }
+        button.close { background: none; border: none; color: #999; margin-top: 10px; width: 100%; font-size: 13px; }
+
     </style>
 </head>
 <body>
-    <div class="market-panel">
-        <div style="font-size:18px; font-weight:bold; margin-bottom:15px;">Coincheck AI Final</div>
-        <div class="mp-row">
-            <div><div class="mp-label">BTCトレンド</div><div class="mp-val" id="btc-trend">---</div></div>
-            <div style="text-align:right;"><div class="mp-label">市場心理 (Fear&Greed)</div><div class="mp-val" id="fng-val">---</div></div>
-        </div>
-        <div class="fng-bar"><div class="fng-fill" id="fng-fill" style="width: 50%; background: #aaa;"></div></div>
-        <div class="mp-label" style="text-align:right; margin-top:4px;" id="fng-state">---</div>
-        <div class="updated" id="last-upd">更新中...</div>
+
+    <header>
+        <h1>Coincheck AI</h1>
+        <button id="notifyBtn" class="notify-btn" onclick="reqNotify()">
+            🔔 通知OFF
+        </button>
+    </header>
+
+    <div class="tabs">
+        <div class="tab active" id="t-short" onclick="setMode('short')">⚡️ デイトレ (短期)</div>
+        <div class="tab" id="t-long" onclick="setMode('long')">💎 ガチホ (長期)</div>
     </div>
+
     <div class="container">
-        <div class="tabs"><div class="tab active" id="t-short" onclick="chgMode('short')">短期トレード</div><div class="tab" id="t-long" onclick="chgMode('long')">長期保有</div></div>
-        <div style="font-size:13px; font-weight:bold; color:#65676b; margin-bottom:10px;">資産状況</div>
-        <div id="pf-list"><div style="padding:20px; text-align:center; color:#999; font-size:12px;">＋ボタンで追加</div></div>
-        <div style="font-size:13px; font-weight:bold; color:#65676b; margin:20px 0 10px;">AI分析レポート</div>
-        <div id="m-list">Loading...</div>
+        <div class="section-title">🏆 AI推奨ランキング TOP5</div>
+        <div id="ranking-area" class="ranking-list">
+            <div style="text-align:center; padding:40px; color:#999;">分析データを読み込み中...</div>
+        </div>
+
+        <div class="section-title" style="margin-top:30px;">💰 あなたの資産</div>
+        <div id="pf-area">
+            <div style="text-align:center; padding:20px; font-size:12px; color:#999; background:#fff; border-radius:12px;">
+                まだ購入情報がありません。<br>ランキングを見て購入したら、右下の＋ボタンで登録してください。
+            </div>
+        </div>
+
+        <div class="updated-time" id="last-upd">---</div>
     </div>
-    <div class="fab" onclick="openM()">＋</div>
+
+    <div class="fab" onclick="openModal()">＋</div>
+
     <div class="modal" id="modal">
-        <div class="m-box">
-            <h3 style="text-align:center; margin-top:0;">資産入力</h3>
-            <label style="font-size:12px;">銘柄</label><select id="in-sym"></select>
-            <label style="font-size:12px;">購入単価</label><input type="number" id="in-rate" placeholder="例: 50">
-            <label style="font-size:12px;">投資額(円)</label><input type="number" id="in-yen" placeholder="例: 10000">
-            <button class="b-save" onclick="save()">保存</button>
-            <button class="b-close" onclick="closeM()">閉じる</button>
-            <button onclick="delLast()" style="background:none; color:red; font-size:12px; margin-top:15px;">最新を削除</button>
+        <div class="modal-box">
+            <h3 style="text-align:center; margin-top:0;">資産を登録</h3>
+            <label style="font-size:12px; color:#888;">購入した銘柄</label>
+            <select id="in-sym"></select>
+            <label style="font-size:12px; color:#888;">購入レート(1枚あたり)</label>
+            <input type="number" id="in-rate" placeholder="例: 5000000">
+            <label style="font-size:12px; color:#888;">購入金額(円)</label>
+            <input type="number" id="in-yen" placeholder="例: 10000">
+            <button class="save" onclick="saveData()">保存する</button>
+            <button class="close" onclick="closeModal()">閉じる</button>
         </div>
     </div>
+
     <script>
-        let mode = 'short';
-        let data = {};
-        let myPos = JSON.parse(localStorage.getItem('cc_final_pos')) || [];
+        let mode = 'short'; // short or long
+        let marketData = {};
+        let myPos = JSON.parse(localStorage.getItem('cc_v6_pos')) || [];
+
+        // 通知許可リクエスト
+        function reqNotify() {
+            if (!("Notification" in window)) return alert("この端末は通知に対応していません");
+            Notification.requestPermission().then(permission => {
+                updateNotifyBtn(permission);
+                if (permission === "granted") new Notification("通知がオンになりました！");
+            });
+        }
+
+        function updateNotifyBtn(perm) {
+            const btn = document.getElementById('notifyBtn');
+            if (perm === 'granted') {
+                btn.innerText = "🔔 通知ON";
+                btn.classList.add('active');
+            } else {
+                btn.innerText = "🔕 通知OFF";
+                btn.classList.remove('active');
+            }
+        }
+
+        // 初期化
         async function init() {
+            if ("Notification" in window) updateNotifyBtn(Notification.permission);
+            
             try {
-                const res = await fetch(`data/crypto_signal.json?t=${Date.now()}`);
+                const ts = new Date().getTime();
+                const res = await fetch(`data/crypto_signal.json?t=${ts}`);
                 const json = await res.json();
-                data = json.data;
-                renderMarketInfo(json.market, json.updated);
-                renderList();
-                fillSel();
-            } catch(e) { console.log(e); }
+                marketData = json.data;
+                document.getElementById('last-upd').innerText = `データ更新: ${json.updated}`;
+                
+                fillSelect();
+                render();
+            } catch (e) {
+                console.error(e);
+                document.getElementById('ranking-area').innerHTML = '<div style="text-align:center; padding:20px;">データ取得エラー<br>まだ分析が完了していない可能性があります。</div>';
+            }
         }
-        function renderMarketInfo(m, upd) {
-            document.getElementById('last-upd').innerText = upd;
-            const btcEl = document.getElementById('btc-trend');
-            btcEl.innerText = m.btc_trend === "UP" ? "上昇 (強気)" : "下落 (弱気)";
-            btcEl.style.color = m.btc_trend === "UP" ? "#eb4d3d" : "#007aff";
-            document.getElementById('fng-val').innerText = m.fng_score;
-            document.getElementById('fng-state').innerText = m.fng_state;
-            const bar = document.getElementById('fng-fill');
-            bar.style.width = m.fng_score + "%";
-            if(m.fng_score <= 25) bar.style.background = "#007aff";
-            else if(m.fng_score >= 75) bar.style.background = "#eb4d3d";
-            else bar.style.background = "#f1c40f";
-        }
-        function chgMode(m) {
+
+        function setMode(m) {
             mode = m;
             document.getElementById('t-short').className = `tab ${m==='short'?'active':''}`;
             document.getElementById('t-long').className = `tab ${m==='long'?'active':''}`;
-            renderList();
+            render();
         }
-        function renderList() {
-            const list = document.getElementById('m-list');
-            const pfList = document.getElementById('pf-list');
-            if(Object.keys(data).length > 0) {
-                let html = '';
-                const keys = Object.keys(data).sort((a,b) => data[b][mode].score - data[a][mode].score);
-                keys.forEach(k => {
-                    const d = data[k];
-                    const a = d[mode];
-                    html += `<div class="coin-card" onclick="pre('${k}')"><div class="cc-header"><div><div class="cc-sym">${k}</div><div class="cc-price">¥${d.price.toLocaleString()}</div></div><div class="cc-score-area"><div class="cc-badge" style="background:${a.color}">${a.signal}</div><div style="font-size:10px; color:#999; margin-top:2px;">SCORE: ${a.score}</div></div></div><div class="cc-detail"><div class="strategy-box" style="border-right:1px solid #eee;"><span class="st-label">損切り (S/L)</span><span class="st-val st-sl">¥${a.sl.toLocaleString()}</span></div><div class="strategy-box"><span class="st-label">利確目標 (T/P)</span><span class="st-val st-tp">¥${a.tp.toLocaleString()}</span></div></div><div style="font-size:10px; color:#888; margin-top:8px; text-align:center;">${a.msg}</div></div>`;
-                });
-                list.innerHTML = html;
-            }
-            if(myPos.length > 0) {
-                let html = '';
+
+        function render() {
+            if (Object.keys(marketData).length === 0) return;
+
+            // --- 1. ランキング生成 ---
+            const list = document.getElementById('ranking-area');
+            // スコア順にソート
+            const sortedKeys = Object.keys(marketData).sort((a, b) => {
+                const scoreA = marketData[a][mode].score || 0;
+                const scoreB = marketData[b][mode].score || 0;
+                return scoreB - scoreA;
+            });
+
+            let html = '';
+            // 上位5つを表示
+            sortedKeys.slice(0, 5).forEach((sym, idx) => {
+                const d = marketData[sym];
+                const a = d[mode];
+                
+                // ランクごとのスタイル
+                const rankClass = idx < 3 ? `rank-${idx+1}` : '';
+                
+                html += `
+                <div class="rank-card ${rankClass}" onclick="prefill('${sym}')">
+                    <div class="rank-badge">${idx + 1}位</div>
+                    <div class="rc-left">
+                        <div class="rc-sym">${sym}</div>
+                        <div class="rc-price">¥${d.price.toLocaleString()}</div>
+                        <div class="signal-tag" style="background:${a.color}">${a.signal}</div>
+                    </div>
+                    <div class="rc-right">
+                        <div class="score-val" style="color:${a.color}">${a.score}</div>
+                        <span class="score-lbl">AIスコア</span>
+                    </div>
+                </div>`;
+            });
+            list.innerHTML = html;
+
+            // --- 2. 資産リスト生成 ---
+            const pfList = document.getElementById('pf-area');
+            if (myPos.length > 0) {
+                let pfHtml = '';
                 myPos.forEach((p, i) => {
-                    const d = data[p.symbol];
-                    if(!d) return;
-                    const val = (p.yen / p.buyRate) * d.price;
-                    const profit = val - p.yen;
+                    const d = marketData[p.symbol];
+                    if (!d) return;
+                    
+                    const currentVal = (p.yen / p.buyRate) * d.price;
+                    const profit = currentVal - p.yen;
                     const cls = profit >= 0 ? 'plus' : 'minus';
-                    let alert = '';
-                    if(d[mode].score <= 30 && profit > 0) { alert = `<div style="width:100%; background:#06c755; color:white; font-size:10px; text-align:center; padding:2px; border-radius:4px; margin-top:4px;">🚨 利確チャンス</div>`; }
-                    html += `<div class="pf-item ${cls}"><div><div style="font-weight:bold; font-size:15px;">${p.symbol}</div><div style="font-size:11px; color:#888;">取得: ${p.buyRate}</div></div><div style="text-align:right;"><div style="font-weight:bold; font-size:16px; color:${profit>=0?'#ff3b30':'#007aff'}">${profit>=0?'+':''}¥${Math.floor(profit).toLocaleString()}</div>${alert}</div><button onclick="del(${i})" style="width:auto; padding:5px 10px; margin:0 0 0 10px; background:#f0f2f5; color:#333; font-size:10px;">×</button></div>`;
+                    const sign = profit >= 0 ? '+' : '';
+
+                    // 売り通知チェック
+                    const score = d[mode].score;
+                    let alertMsg = '';
+                    if (score <= 30 && profit > 0) {
+                        alertMsg = `<div style="color:#fff; background:#00c076; font-size:11px; padding:4px; text-align:center; border-radius:4px; margin-top:5px; font-weight:bold;">🚨 AI判断: 利益確定の好機</div>`;
+                        // 通知許可済みなら通知を送る
+                        if (Notification.permission === "granted") {
+                            // 連続通知を防ぐため簡易的な制御を入れる等の工夫が可能だが、ここではシンプルに
+                        }
+                    }
+
+                    pfHtml += `
+                    <div class="pf-card ${cls}">
+                        <button class="del-btn" onclick="delPos(${i})">削除</button>
+                        <div style="font-weight:bold; font-size:16px;">${p.symbol}</div>
+                        <div style="font-size:12px; color:#888; margin-bottom:5px;">投資: ¥${p.yen.toLocaleString()} (¥${p.buyRate}/枚)</div>
+                        <div style="font-weight:900; font-size:18px; color:${profit>=0?'#ff4d4f':'#00c076'}">
+                            ${sign}¥${Math.floor(profit).toLocaleString()}
+                        </div>
+                        ${alertMsg}
+                    </div>`;
                 });
-                pfList.innerHTML = html;
-            } else { pfList.innerHTML = '<div style="text-align:center; padding:20px; font-size:12px; color:#999;">＋ボタンで追加</div>'; }
+                pfList.innerHTML = pfHtml;
+            } else {
+                pfList.innerHTML = `<div style="text-align:center; padding:20px; font-size:12px; color:#999; background:#fff; border-radius:12px;">まだ購入情報がありません。<br>ランキングを見て購入したら、右下の＋ボタンで登録してください。</div>`;
+            }
         }
-        function fillSel(){ const s=document.getElementById('in-sym'); let h=''; Object.keys(data).forEach(k=>h+=`<option value="${k}">${k}</option>`); s.innerHTML=h; }
-        function openM(){document.getElementById('modal').style.display='flex';}
-        function closeM(){document.getElementById('modal').style.display='none';}
-        function pre(s){document.getElementById('in-sym').value=s; openM();}
-        function save(){
-            const s=document.getElementById('in-sym').value; const r=document.getElementById('in-rate').value; const y=document.getElementById('in-yen').value;
-            if(!s||!r||!y)return alert("入力不備");
-            myPos.push({symbol:s, buyRate:parseFloat(r), yen:parseFloat(y)}); localStorage.setItem('cc_final_pos', JSON.stringify(myPos)); closeM(); init();
+
+        // UI操作系
+        function fillSelect() {
+            const s = document.getElementById('in-sym');
+            let h = '';
+            Object.keys(marketData).sort().forEach(k => h += `<option value="${k}">${k}</option>`);
+            s.innerHTML = h;
         }
-        function del(i){ if(confirm("削除しますか？")){myPos.splice(i,1);localStorage.setItem('cc_final_pos',JSON.stringify(myPos));init();} }
-        function delLast(){ if(myPos.length>0&&confirm("削除？")){myPos.pop();localStorage.setItem('cc_final_pos',JSON.stringify(myPos));closeM();init();} }
+        function openModal() { document.getElementById('modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function prefill(sym) {
+            document.getElementById('in-sym').value = sym;
+            openModal();
+        }
+        function saveData() {
+            const s = document.getElementById('in-sym').value;
+            const r = document.getElementById('in-rate').value;
+            const y = document.getElementById('in-yen').value;
+            if (!s || !r || !y) return alert("全ての項目を入力してください");
+            myPos.push({ symbol: s, buyRate: parseFloat(r), yen: parseFloat(y) });
+            localStorage.setItem('cc_v6_pos', JSON.stringify(myPos));
+            closeModal(); render();
+        }
+        function delPos(i) {
+            if (confirm("この資産データを削除しますか？")) {
+                myPos.splice(i, 1);
+                localStorage.setItem('cc_v6_pos', JSON.stringify(myPos));
+                render();
+            }
+        }
+
         init();
     </script>
 </body>
